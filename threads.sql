@@ -1,0 +1,8 @@
+CREATE TABLE topics(
+id INT NOT NULL AUTO_INCREMENT,
+title VARCHAR(255),
+author INT,
+postTime DATETIME,
+FOREIGN KEY (author) REFERENCES users(id),
+PRIMARY KEY (id)
+);
