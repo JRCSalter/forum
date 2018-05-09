@@ -3,6 +3,8 @@
 // This page is used to login to the forum
 
 require_once "common.php";
+require_once "DataObject.php";
+Require_once "Users.class.php";
 
 $meta = array(
               "description" => "Login to the forum",
@@ -12,6 +14,15 @@ $meta = array(
 $title = isset( $_GET[ "title" ] ) ? $_GET[ "title" ] : "Login";
 
 displayHeader( $meta, $title );
+
+if ( User::isVerified( "Allison", "Swo3rd" ) )
+  {
+    echo "all good";
+  }
+  else
+  {
+    echo "not good";
+  }
 
 ?>
 

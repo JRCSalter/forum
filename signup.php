@@ -30,6 +30,7 @@ else
   {
     if ( in_array( $key, $requiredFields ) && ( $value == "" ) )
     {
+      
       array_push( $warnings, $key );
     }
   }
@@ -38,9 +39,9 @@ else
   $age      = $_POST[ "age"  ] ? preg_replace( "/[^0-9]/",    " ", $_POST[ "age"  ] ) : NULL;
   $dob      = $_POST[ "dob"  ] ? preg_replace( "/[^0-9-]/",   " ", $_POST[ "dob"  ] ) : NULL;
   
-  $password = ( $_POST[ "password1" ] == $_POST[ "password2" ] ) ? preg_replace( "/[^0-9-]/",   " ", $_POST[ "password1"  ] ) : NULL;
+  $password = ( $_POST[ "password1" ] == $_POST[ "password2" ] ) ? preg_replace( "/[^A-Za-z0-9-]/",   " ", $_POST[ "password1"  ] ) : NULL;
 
-  $password = password_hash( $password, PASSWORD_DEFAULT );
+  $password = password_hash( $_POST[ "password1" ], PASSWORD_DEFAULT );
 
   if ( !empty( $warnings ) )
   {

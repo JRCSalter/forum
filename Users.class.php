@@ -73,6 +73,37 @@ class User extends DataObject
     }
   }
 
+  public function getUserByName( $name )
+  {
+
+    // Gets the information of a particular user from their ID
+    // Returns an array with the info
+
+    $conn = parent::connect();
+
+    $sql = "SELECT
+            *
+            FROM
+            users
+            WHERE
+            name = '$name'";
+
+    try
+    {
+      $user = $conn->query( $sql );
+      
+      $info = $user->fetch( PDO::FETCH_ASSOC );
+
+      parent::disconnect();
+      return $info;
+    }
+    catch( PDOException $e )
+    {
+      parent::disconnect();
+      die( "Query Failed: " . $e->getMessage() );
+    }
+  }
+
   public function insertUser()
   {
     // Adds user to database
@@ -124,6 +155,17 @@ class User extends DataObject
 
       die( "Query failed: " . $e->getMessage() );
     }
+  }
+
+  public function isVerified( $name, $password )
+  {
+    // verify a user exists
+    // Returns a boolean value
+
+    $user     = User::getUserByName( $name );
+    $storedPW = $user[ 'password'          ];
+
+    return password_verify( $password, $storedPW );
   }
 }
 
