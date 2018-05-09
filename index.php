@@ -15,6 +15,9 @@ $title = "Forum";
 
 $users = User::getUsers();
 
+// This is a big idea that I want to implement
+// So big I need another freakin' branch!!!
+
 $userRows = array();
 foreach ( $users as $user )
 {
