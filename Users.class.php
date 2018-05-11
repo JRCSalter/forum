@@ -60,7 +60,7 @@ class User extends DataObject
     try
     {
       $user = $conn->query( $sql );
-      
+
       $info = $user->fetch( PDO::FETCH_ASSOC );
 
       parent::disconnect();
@@ -91,7 +91,7 @@ class User extends DataObject
     try
     {
       $user = $conn->query( $sql );
-      
+
       $info = $user->fetch( PDO::FETCH_ASSOC );
 
       parent::disconnect();
@@ -140,7 +140,7 @@ class User extends DataObject
       parent::disconnect();
 
       ?>
-      
+
       <h1>Welcome <?php echo $this->data[ "name" ] ?></h1>
 
       <p>You have succesfully signed up.</p>
