@@ -1,7 +1,7 @@
 <?php
 
 include "config.php";
-
+// echo "stuff" . " More Stuff"
 abstract class DataObject
 {
   protected $data = array();
@@ -40,7 +40,7 @@ abstract class DataObject
     return htmlspecialchars( $this->getValue( $field ) );
   } // end getValueEncoded()
 
-  
+
   // Connect to a database
   protected function connect()
   {
