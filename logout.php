@@ -1,5 +1,7 @@
 <?php
 
+// Enable the user to logout
+
 session_start();
 
 require_once "common.php";
@@ -7,9 +9,9 @@ require_once "DataObject.php";
 Require_once "Users.class.php";
 
 $meta = array(
-              "description" => "Logout from the forum",
-              "author"      => "John"
-            );
+               "description" => "Logout from the forum",
+               "author"      => "John"
+             );
 
 $title = isset( $_GET[ "title" ] ) ? $_GET[ "title" ] : "Logout";
 
@@ -22,6 +24,10 @@ if ( !isset( $_SESSION[ "name" ] ) )
 {
   echo "You have been logged out.<br>";
   echo "Please come back soon.";
+}
+else
+{
+  echo "Logout failed. Please try again";
 }
 
 ?>

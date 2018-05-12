@@ -1,14 +1,14 @@
 <?php
 
 include "config.php";
-// echo "stuff" . " More Stuff"
+
 abstract class DataObject
+// Defines the common features for all database based classes
 {
   protected $data = array();
 
-
-  // Take an array of data as argument and assign it to the $data array
   public function __construct ( $data )
+  // Take an array of data as argument and assign it to the $data array
   {
     foreach ( $data as $key => $value )
     {
@@ -19,9 +19,8 @@ abstract class DataObject
     }
   } // end __construct()
 
-
-  // Get a particular value from the $data array
   public function getValue( $field )
+  // Get a particular value from the $data array
   {
     if ( array_key_exists( $field, $this->data ) )
     {
@@ -33,16 +32,14 @@ abstract class DataObject
     }
   } // end getValue()
 
-
-  // Get a particular value and encode it for HTML
   public function getValueEncoded( $field )
+  // Get a particular value and encode it for HTML
   {
     return htmlspecialchars( $this->getValue( $field ) );
   } // end getValueEncoded()
 
-
-  // Connect to a database
   protected function connect()
+  // Connect to a database
   {
     try
     {
@@ -58,9 +55,8 @@ abstract class DataObject
     return $conn;
   } // end connect()
 
-
-  // Disconnect from a database
   protected function disconnect( $conn )
+  // Disconnect from a database
   {
     $conn = "";
   } // end disconnect()

@@ -40,7 +40,7 @@ function makeTable( $headers, $data )
   </table>
 
   <?php
-}
+} // end makeTable()
 
 function displayHeader( $meta, $title )
 // Displays the Head of an HTML file along with the mata tags
@@ -67,7 +67,7 @@ function displayHeader( $meta, $title )
   </head>
   <body>
   <?php
-}
+} // end displayHeader()
 
 function displayFooter()
 // Displays the closing tags for the <html>
@@ -76,7 +76,7 @@ function displayFooter()
   </body>
   </html>
   <?php
-}
+} // end displayFooter()
 
 function validateFields( $fieldName, $missingFields )
 // Ensures required fields contain data in a form and assigns .error class
@@ -87,7 +87,7 @@ function validateFields( $fieldName, $missingFields )
   {
     echo ' class="error"';
   }
-}
+} // end validateFields()
 
 function displayInsert( $warnings )
 // Displays the form to insert data into the Users table
@@ -201,6 +201,6 @@ function displayInsert( $warnings )
     </table>
   </form>
   <?php
-}
+} // end displayInsert()
 
 ?>

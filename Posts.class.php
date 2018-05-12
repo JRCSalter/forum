@@ -1,6 +1,7 @@
 <?php
 
 class Post extends DataObject
+// handles the posts and comments
 {
   protected $data = array(
                            "id"       => "",
@@ -10,11 +11,9 @@ class Post extends DataObject
                            "postTime" => ""
                          );
 
-
   public function getPosts()
+  // Retrieve an array of all posts and the associated data
   {
-    // Retrieve an array of all posts and the associated data
-
     $conn = parent::connect();
 
     $sql  = "SELECT
@@ -26,7 +25,7 @@ class Post extends DataObject
     {
       $st = $conn->query( $sql );
 
-      foreach ($st->fetchAll() as $row)
+      foreach ( $st->fetchAll() as $row )
       {
         $posts[] = new Post( $row );
       }
@@ -40,12 +39,12 @@ class Post extends DataObject
       parent::disconnect();
       die( "Query failed: " . $e->getMessage() );
     }
-  }
+  } // end getPosts()
 
   public function getThread( $id )
+  // Returns an array of all posts under one topic
+  // $id is the id of the relevant topic
   {
-    // Returns an array of all posts under one topic
-
     $conn = parent::connect();
 
     $sql = "SELECT
@@ -62,10 +61,12 @@ class Post extends DataObject
       $info = $conn->prepare( $sql );
 
       $info->bindValue( ":id", $id, PDO::PARAM_STR );
-
       $info->execute();
 
-      $thread = $info->fetchAll( PDO::FETCH_ASSOC );
+      foreach ( $info->fetchAll() as $row )
+      {
+        $thread[] = new Post( $row );
+      }
 
       parent::disconnect();
 
@@ -74,9 +75,10 @@ class Post extends DataObject
     catch( PDOException $e )
     {
       parent::disconnect();
+      
       die( "Query failed: " . $e->getMessage() );
     }
-  }
+  } // end getThread()
 }
 
 ?>

@@ -1,5 +1,7 @@
 <?php
 
+// Displays all topics, and links to their comments
+
 session_start();
 
 require_once "DataObject.php";
@@ -9,9 +11,9 @@ require_once "Posts.class.php";
 require_once "common.php";
 
 $meta = array(
-          "description" => "A Forum",
-          "author"      => "John"
-        );
+               "description" => "A Forum",
+               "author"      => "John"
+             );
 
 $title = isset( $_GET[ "title" ] ) ? $_GET[ "title" ] : "Topics";
 $id    = isset( $_GET[ "id"    ] ) ? $_GET[ "id"    ] : "";
@@ -22,14 +24,15 @@ if ( !isset( $_SESSION[ "name" ] ) )
 {
   ?>
 
-  <a href='signup.php?displayForm=1'><button>Sign Up</button></a>
-    <a href='login.php'><button>Login</button></a>
+  <a href='signup.php'><button>Sign Up</button></a>
+  <a href='login.php'><button>Login</button></a>
 
   <?php
 }
 else
 {
   echo "<br>Logged in as: " . $_SESSION[ "name" ] . "<br>";
+
   ?>
 
   <a href="logout.php"><button>Logout</button></a>
@@ -48,6 +51,7 @@ if ( $title == "Topics" )
     $author = User::getUser( $topic->getValue( "author" ) );
     $id     = $topic->getValue( "id" );
     $title  = $topic->getValueEncoded( "title" );
+
     $topicTitle  = "<a href=\"showtopics.php?title=" .
                    $title                            .
                    "&id="                            .
@@ -56,9 +60,11 @@ if ( $title == "Topics" )
                    $title                            .
                    "</a>";
 
+    // Set and associative array for the row
     $topicRow[ "title"    ] = $topicTitle;
     $topicRow[ "author"   ] = $author[ "name" ];
     $topicRow[ "postTime" ] = $topic->getValue( "postTime" );
+
     $topicRows[] = $topicRow;
   }
 
@@ -68,18 +74,17 @@ if ( $title == "Topics" )
 }
 else
 {
-
-  echo "<p>start</p>";
   $posts = Post::getThread( $id );
   $postRows = array();
 
   foreach ( $posts as $post )
   {
-    $author = User::getUser( $post[ "author" ] );
+    $author = User::getUser( $post->getValue( "author" ) );
 
-    $postRow[ "content"  ] = $post[ "content"  ];
-    $postRow[ "author"   ] = $author[ "name"   ];
-    $postRow[ "postTime" ] = $post[ "postTime" ];
+    $postRow[ "content"  ] = $post->getValue( "content"  );
+    $postRow[ "author"   ] = $author[ "name"             ];
+    $postRow[ "postTime" ] = $post->getValue( "postTime" );
+
     $postRows[] = $postRow;
   }
 
@@ -87,10 +92,6 @@ else
 
   makeTable( $postHeaders, $postRows );
 }
-
-?>
-<p>end</p>
-<?php
 
 displayFooter();
 ?>

@@ -1,6 +1,7 @@
 <?php
-// rfdsevbf
+
 class User extends DataObject
+// Defines all the methods needed for Users
 {
   protected $data = array(
                            "id"       => "",
@@ -11,11 +12,9 @@ class User extends DataObject
                            "joined"   => "",
                          );
 
-
   public function getUsers()
+  // Retrieve an array of all users and the associated data
   {
-    // Retrieve an array of all users and the associated data
-
     $conn = parent::connect();
 
     $sql  = "SELECT
@@ -27,7 +26,7 @@ class User extends DataObject
     {
       $st = $conn->query( $sql );
 
-      foreach ($st->fetchAll() as $row)
+      foreach ( $st->fetchAll() as $row )
       {
         $users[] = new User( $row );
       }
@@ -39,15 +38,15 @@ class User extends DataObject
     catch( PDOException $e )
     {
       parent::disconnect();
+
       die( "Query failed: " . $e->getMessage() );
     }
-  }
+  } // end getUsers()
 
   public function getUser( $id )
+  // Gets the information of a particular user from their ID
+  // Returns an array with the info
   {
-    // Gets the information of a particular user from their ID
-    // Returns an array with the info
-
     $conn = parent::connect();
 
     $sql = "SELECT
@@ -64,21 +63,21 @@ class User extends DataObject
       $info = $user->fetch( PDO::FETCH_ASSOC );
 
       parent::disconnect();
+
       return $info;
     }
     catch( PDOException $e )
     {
       parent::disconnect();
+
       die( "Query Failed: " . $e->getMessage() );
     }
-  }
+  } // end getUser()
 
   public function getUserByName( $name )
+  // Gets the information of a particular user from their ID
+  // Returns an array with the info
   {
-
-    // Gets the information of a particular user from their ID
-    // Returns an array with the info
-
     $conn = parent::connect();
 
     $sql = "SELECT
@@ -95,19 +94,20 @@ class User extends DataObject
       $info = $user->fetch( PDO::FETCH_ASSOC );
 
       parent::disconnect();
+
       return $info;
     }
     catch( PDOException $e )
     {
       parent::disconnect();
+
       die( "Query Failed: " . $e->getMessage() );
     }
-  }
+  } // end getUserByName()
 
   public function insertUser()
+  // Adds user to database
   {
-    // Adds user to database
-
     $conn = parent::connect();
 
     $sql = "INSERT INTO
@@ -155,18 +155,17 @@ class User extends DataObject
 
       die( "Query failed: " . $e->getMessage() );
     }
-  }
+  } // end insertUser()
 
   public function isVerified( $name, $password )
+  // verify a user exists
+  // Returns a boolean value
   {
-    // verify a user exists
-    // Returns a boolean value
-
     $user     = User::getUserByName( $name );
     $storedPW = $user[ 'password'          ];
 
     return password_verify( $password, $storedPW );
-  }
+  } // end isVerified()
 }
 
 ?>

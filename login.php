@@ -9,18 +9,25 @@ require_once "DataObject.php";
 Require_once "Users.class.php";
 
 $meta = array(
-              "description" => "Login to the forum",
-              "author"      => "John"
-            );
+               "description" => "Login to the forum",
+               "author"      => "John"
+             );
 
 $title = isset( $_GET[ "title" ] ) ? $_GET[ "title" ] : "Login";
 
 displayHeader( $meta, $title );
 
-// Uncomment the following lines to reset the session for debugging
+////////////////////////////////////////////////////////////////////////////////
+// Uncomment the following lines to reset the session for debugging ////////////
+////////////////////////////////////////////////////////////////////////////////
 // session_unset();
 // session_destroy();
+////////////////////////////////////////////////////////////////////////////////
 
+// Check if $_POST[ "name" ] has been set, proving the form has been sent
+// Then check if $_SESSIOM[ "name" ] has not been set, proving the user has not
+// logged in
+// All else fails, then the user has logged in, so display the message
 if( $_POST[ "name" ] )
 {
   if ( User::isVerified( $_POST[ "name" ], $_POST[ "password" ] ) )
@@ -38,7 +45,7 @@ if( $_POST[ "name" ] )
 
     ?>
 
-    <a href="showtopics.php"><button>Home</button></a>
+    <a href="index.php"><button>Home</button></a>
 
     <?php
   }
@@ -46,7 +53,6 @@ if( $_POST[ "name" ] )
   {
     echo "Incorrect username or password";
   }
-
 }
 else if( !$_SESSION[ "name" ] )
 {
@@ -54,6 +60,7 @@ else if( !$_SESSION[ "name" ] )
 
   <form action='login.php' method ='post' id='loginForm'>
   	<table>
+
   		<tr>
   			<td>
   				<label for='name'>Username:</label>
@@ -62,6 +69,7 @@ else if( !$_SESSION[ "name" ] )
           <input type='text' name='name'>
         </td>
   		</tr>
+
       <tr>
         <td>
           <label for='password'>Password: </label>
@@ -70,11 +78,13 @@ else if( !$_SESSION[ "name" ] )
           <input type='password' name='password'>
         </td>
       </tr>
+
       <tr>
         <td>
           <input type='submit' name='submit'>
         </td>
       </tr>
+
   	</table>
   </form>
 

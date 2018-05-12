@@ -1,6 +1,7 @@
 <?php
 
 class Topic extends DataObject
+// Defines all the methods for Topics
 {
   protected $data = array(
                            "id"       => "",
@@ -9,11 +10,9 @@ class Topic extends DataObject
                            "postTime" => ""
                          );
 
-
   public function getTopics()
+  // Retrieve an array of all topics and the associated data
   {
-    // Retrieve an array of all topics and the associated data
-
     $conn = parent::connect();
 
     $sql  = "SELECT
@@ -27,7 +26,7 @@ class Topic extends DataObject
     {
       $st = $conn->query( $sql );
 
-      foreach ($st->fetchAll() as $row)
+      foreach ( $st->fetchAll() as $row )
       {
         $topics[] = new Topic( $row );
       }
@@ -39,15 +38,15 @@ class Topic extends DataObject
     catch( PDOException $e )
     {
       parent::disconnect();
+
       die( "Query failed: " . $e->getMessage() );
     }
-  }
+  } // end getTopics()
 
   public function getTopic( $id )
+  // Get all the info for a particular topic
+  // Returns an array with all the info
   {
-    // Get all the info for a particular topic
-    // Returns an array with all the info
-
     $conn = parent::connect();
 
     $sql = "SELECT
@@ -60,7 +59,7 @@ class Topic extends DataObject
     try
     {
       $info = $conn->query( $sql );
-      
+
       $topic = $info->fetch( PDO::FETCH_ASSOC );
 
       parent::disconnect();
@@ -72,8 +71,7 @@ class Topic extends DataObject
       parent::disconnect();
       die( "Query failed: " . $e-getMessage() );
     }
-
-  }
+  } // end getTopic()
 }
 
 ?>
