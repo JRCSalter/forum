@@ -75,10 +75,49 @@ class Post extends DataObject
     catch( PDOException $e )
     {
       parent::disconnect();
-      
+
       die( "Query failed: " . $e->getMessage() );
     }
   } // end getThread()
+
+  public function insertPost()
+  // Inserts a post into the database
+  {
+    $conn = parent::connect();
+
+    $sql = "INSERT INTO
+            posts
+            (
+              content,
+              author,
+              topic
+            )
+            VALUES
+            (
+              :content,
+              :author,
+              :topic
+            )";
+
+    try
+    {
+      $post = $conn->prepare( $sql );
+
+      $post->bindValue( ':content', $this->data[ "content" ] );
+      $post->bindValue( ':author',  $this->data[ "author"  ] );
+      $post->bindValue( ':topic',   $this->data[ "topic"   ] );
+
+      $post->execute();
+
+      parent::disconnect();
+    }
+    catch( PDOException $e )
+    {
+      parent::disconnect();
+
+      die( "Query failed: " . $e->getMessage() );
+    }
+  }
 }
 
 ?>

@@ -36,6 +36,9 @@ else
   ?>
 
   <a href="logout.php"><button>Logout</button></a>
+  <br>
+  <a href="addtopic.php"><button>Add Topic</button></a>
+  <br>
 
   <?php
 }
@@ -91,6 +94,8 @@ else
   $postHeaders = array( "Content", "Author", "Posted" );
 
   makeTable( $postHeaders, $postRows );
+
+  echo "<br><a href='addpost.php?id=" . $id . "'><button>Add comment</button></a>";
 }
 
 displayFooter();
